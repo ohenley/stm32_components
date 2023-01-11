@@ -41,78 +41,76 @@
 --   COPYRIGHT(c) 2014 STMicroelectronics                                   --
 ------------------------------------------------------------------------------
 
-with Interfaces; use Interfaces;
-
 package body STMPE811 is
 
    pragma Warnings (Off, "constant * is not referenced");
    --  Control Registers
-   IOE_REG_SYS_CTRL1    : constant Byte := 16#03#;
-   IOE_REG_SYS_CTRL2    : constant Byte := 16#04#;
-   IOE_REG_SPI_CFG      : constant Byte := 16#08#;
+   IOE_REG_SYS_CTRL1 : constant UInt8 := 16#03#;
+   IOE_REG_SYS_CTRL2 : constant UInt8 := 16#04#;
+   IOE_REG_SPI_CFG   : constant UInt8 := 16#08#;
 
    --  Touch Panel Registers
-   IOE_REG_TSC_CTRL     : constant Byte := 16#40#;
-   IOE_REG_TSC_CFG      : constant Byte := 16#41#;
-   IOE_REG_WDM_TR_X     : constant Byte := 16#42#;
-   IOE_REG_WDM_TR_Y     : constant Byte := 16#44#;
-   IOE_REG_WDM_BL_X     : constant Byte := 16#46#;
-   IOE_REG_WDM_BL_Y     : constant Byte := 16#48#;
-   IOE_REG_FIFO_TH      : constant Byte := 16#4A#;
-   IOE_REG_FIFO_STA     : constant Byte := 16#4B#;
-   IOE_REG_FIFO_SIZE    : constant Byte := 16#4C#;
-   IOE_REG_TSC_DATA_X   : constant Byte := 16#4D#;
-   IOE_REG_TSC_DATA_Y   : constant Byte := 16#4F#;
-   IOE_REG_TSC_DATA_Z   : constant Byte := 16#51#;
-   IOE_REG_TSC_DATA_XYZ : constant Byte := 16#52#;
-   IOE_REG_TSC_FRACT_Z  : constant Byte := 16#56#;
-   IOE_REG_TSC_DATA     : constant Byte := 16#57#;
-   IOE_REG_TSC_I_DRIVE  : constant Byte := 16#58#;
-   IOE_REG_TSC_SHIELD   : constant Byte := 16#59#;
+   IOE_REG_TSC_CTRL     : constant UInt8 := 16#40#;
+   IOE_REG_TSC_CFG      : constant UInt8 := 16#41#;
+   IOE_REG_WDM_TR_X     : constant UInt8 := 16#42#;
+   IOE_REG_WDM_TR_Y     : constant UInt8 := 16#44#;
+   IOE_REG_WDM_BL_X     : constant UInt8 := 16#46#;
+   IOE_REG_WDM_BL_Y     : constant UInt8 := 16#48#;
+   IOE_REG_FIFO_TH      : constant UInt8 := 16#4A#;
+   IOE_REG_FIFO_STA     : constant UInt8 := 16#4B#;
+   IOE_REG_FIFO_SIZE    : constant UInt8 := 16#4C#;
+   IOE_REG_TSC_DATA_X   : constant UInt8 := 16#4D#;
+   IOE_REG_TSC_DATA_Y   : constant UInt8 := 16#4F#;
+   IOE_REG_TSC_DATA_Z   : constant UInt8 := 16#51#;
+   IOE_REG_TSC_DATA_XYZ : constant UInt8 := 16#52#;
+   IOE_REG_TSC_FRACT_Z  : constant UInt8 := 16#56#;
+   IOE_REG_TSC_DATA     : constant UInt8 := 16#57#;
+   IOE_REG_TSC_I_DRIVE  : constant UInt8 := 16#58#;
+   IOE_REG_TSC_SHIELD   : constant UInt8 := 16#59#;
 
    --  IOE GPIO Registers
-   IOE_REG_GPIO_SET_PIN : constant Byte := 16#10#;
-   IOE_REG_GPIO_CLR_PIN : constant Byte := 16#11#;
-   IOE_REG_GPIO_MP_STA  : constant Byte := 16#12#;
-   IOE_REG_GPIO_DIR     : constant Byte := 16#13#;
-   IOE_REG_GPIO_ED      : constant Byte := 16#14#;
-   IOE_REG_GPIO_RE      : constant Byte := 16#15#;
-   IOE_REG_GPIO_FE      : constant Byte := 16#16#;
-   IOE_REG_GPIO_AF      : constant Byte := 16#17#;
+   IOE_REG_GPIO_SET_PIN : constant UInt8 := 16#10#;
+   IOE_REG_GPIO_CLR_PIN : constant UInt8 := 16#11#;
+   IOE_REG_GPIO_MP_STA  : constant UInt8 := 16#12#;
+   IOE_REG_GPIO_DIR     : constant UInt8 := 16#13#;
+   IOE_REG_GPIO_ED      : constant UInt8 := 16#14#;
+   IOE_REG_GPIO_RE      : constant UInt8 := 16#15#;
+   IOE_REG_GPIO_FE      : constant UInt8 := 16#16#;
+   IOE_REG_GPIO_AF      : constant UInt8 := 16#17#;
 
    --  IOE Functions
-   IOE_ADC_FCT          : constant Byte := 16#01#;
-   IOE_TSC_FCT          : constant Byte := 16#02#;
-   IOE_IO_FCT           : constant Byte := 16#04#;
+   IOE_ADC_FCT : constant UInt8 := 16#01#;
+   IOE_TSC_FCT : constant UInt8 := 16#02#;
+   IOE_IO_FCT  : constant UInt8 := 16#04#;
 
    --  ADC Registers
-   IOE_REG_ADC_INT_EN   : constant Byte := 16#0E#;
-   IOE_REG_ADC_INT_STA  : constant Byte := 16#0F#;
-   IOE_REG_ADC_CTRL1    : constant Byte := 16#20#;
-   IOE_REG_ADC_CTRL2    : constant Byte := 16#21#;
-   IOE_REG_ADC_CAPT     : constant Byte := 16#22#;
-   IOE_REG_ADC_DATA_CH0 : constant Byte := 16#30#;
-   IOE_REG_ADC_DATA_CH1 : constant Byte := 16#32#;
-   IOE_REG_ADC_DATA_CH2 : constant Byte := 16#34#;
-   IOE_REG_ADC_DATA_CH3 : constant Byte := 16#36#;
-   IOE_REG_ADC_DATA_CH4 : constant Byte := 16#38#;
-   IOE_REG_ADC_DATA_CH5 : constant Byte := 16#3A#;
-   IOE_REG_ADC_DATA_CH6 : constant Byte := 16#3B#;
-   IOE_REG_ADC_DATA_CH7 : constant Byte := 16#3C#;
+   IOE_REG_ADC_INT_EN   : constant UInt8 := 16#0E#;
+   IOE_REG_ADC_INT_STA  : constant UInt8 := 16#0F#;
+   IOE_REG_ADC_CTRL1    : constant UInt8 := 16#20#;
+   IOE_REG_ADC_CTRL2    : constant UInt8 := 16#21#;
+   IOE_REG_ADC_CAPT     : constant UInt8 := 16#22#;
+   IOE_REG_ADC_DATA_CH0 : constant UInt8 := 16#30#;
+   IOE_REG_ADC_DATA_CH1 : constant UInt8 := 16#32#;
+   IOE_REG_ADC_DATA_CH2 : constant UInt8 := 16#34#;
+   IOE_REG_ADC_DATA_CH3 : constant UInt8 := 16#36#;
+   IOE_REG_ADC_DATA_CH4 : constant UInt8 := 16#38#;
+   IOE_REG_ADC_DATA_CH5 : constant UInt8 := 16#3A#;
+   IOE_REG_ADC_DATA_CH6 : constant UInt8 := 16#3B#;
+   IOE_REG_ADC_DATA_CH7 : constant UInt8 := 16#3C#;
 
    --  Interrupt Control Registers
-   IOE_REG_INT_CTRL     : constant Byte := 16#09#;
-   IOE_REG_INT_EN       : constant Byte := 16#0A#;
-   IOE_REG_INT_STA      : constant Byte := 16#0B#;
-   IOE_REG_GPIO_INT_EN  : constant Byte := 16#0C#;
-   IOE_REG_GPIO_INT_STA : constant Byte := 16#0D#;
+   IOE_REG_INT_CTRL     : constant UInt8 := 16#09#;
+   IOE_REG_INT_EN       : constant UInt8 := 16#0A#;
+   IOE_REG_INT_STA      : constant UInt8 := 16#0B#;
+   IOE_REG_GPIO_INT_EN  : constant UInt8 := 16#0C#;
+   IOE_REG_GPIO_INT_STA : constant UInt8 := 16#0D#;
 
    --  touch Panel Pins
-   TOUCH_YD             : constant Byte := 16#02#;
-   TOUCH_XD             : constant Byte := 16#04#;
-   TOUCH_YU             : constant Byte := 16#08#;
-   TOUCH_XU             : constant Byte := 16#10#;
-   TOUCH_IO_ALL         : constant Byte :=
+   TOUCH_YD     : constant UInt8 := 16#02#;
+   TOUCH_XD     : constant UInt8 := 16#04#;
+   TOUCH_YU     : constant UInt8 := 16#08#;
+   TOUCH_XU     : constant UInt8 := 16#10#;
+   TOUCH_IO_ALL : constant UInt8 :=
      TOUCH_YD or TOUCH_XD or TOUCH_YU or TOUCH_XU;
    pragma Warnings (On, "constant * is not referenced");
 
@@ -120,18 +118,16 @@ package body STMPE811 is
    -- Read_Data --
    ---------------
 
-   function Read_Data (This      : in out STMPE811_Device;
-                       Data_Addr : Byte;
-                       Length    : Natural) return TSC_Data
+   function Read_Data
+     (This : in out STMPE811_Device; Data_Addr : UInt8; Length : Natural)
+      return TSC_Data
    is
       Data   : TSC_Data (1 .. Length);
       Status : I2C_Status;
 
    begin
-      This.Port.Mem_Read (This.I2C_Addr,
-                          UInt16 (Data_Addr),
-                          Memory_Size_8b, Data,
-                          Status);
+      This.Port.Mem_Read
+        (This.I2C_Addr, UInt16 (Data_Addr), Memory_Size_8b, Data, Status);
 
       if Status /= Ok then
          raise Program_Error with "Timeout while reading TC data";
@@ -144,18 +140,15 @@ package body STMPE811 is
    -- Read_Register --
    -------------------
 
-   function Read_Register (This     : STMPE811_Device;
-                           Reg_Addr : Byte) return Byte
+   function Read_Register
+     (This : STMPE811_Device; Reg_Addr : UInt8) return UInt8
    is
-      Data : TSC_Data (1 .. 1);
+      Data   : TSC_Data (1 .. 1);
       Status : I2C_Status;
 
    begin
-      This.Port.Mem_Read (This.I2C_Addr,
-                          UInt16 (Reg_Addr),
-                          Memory_Size_8b,
-                          Data,
-                          Status);
+      This.Port.Mem_Read
+        (This.I2C_Addr, UInt16 (Reg_Addr), Memory_Size_8b, Data, Status);
 
       if Status /= Ok then
          raise Program_Error with "Timeout while reading TC data";
@@ -168,17 +161,15 @@ package body STMPE811 is
    -- Write_Register --
    --------------------
 
-   procedure Write_Register (This     : in out STMPE811_Device;
-                             Reg_Addr : Byte;
-                             Data     : Byte) is
+   procedure Write_Register
+     (This : in out STMPE811_Device; Reg_Addr : UInt8; Data : UInt8)
+   is
       Status : I2C_Status;
 
    begin
-      This.Port.Mem_Write (This.I2C_Addr,
-                           UInt16 (Reg_Addr),
-                           Memory_Size_8b,
-                           (1 => Data),
-                           Status);
+      This.Port.Mem_Write
+        (This.I2C_Addr, UInt16 (Reg_Addr), Memory_Size_8b, (1 => Data),
+         Status);
 
       if Status /= Ok then
          raise Program_Error with "Timeout while reading TC data";
@@ -203,11 +194,10 @@ package body STMPE811 is
    -- IOE_Function_Command --
    --------------------------
 
-   procedure IOE_Function_Command (This : in out STMPE811_Device;
-                                   Func : Byte;
-                                   Enabled : Boolean)
+   procedure IOE_Function_Command
+     (This : in out STMPE811_Device; Func : UInt8; Enabled : Boolean)
    is
-      Reg : Byte := This.Read_Register (IOE_REG_SYS_CTRL2);
+      Reg : UInt8 := This.Read_Register (IOE_REG_SYS_CTRL2);
    begin
       --  CTRL2 functions are disabled when corresponding bit is set
 
@@ -224,10 +214,10 @@ package body STMPE811 is
    -- IOE_AF_Config --
    -------------------
 
-   procedure IOE_AF_Config (This      : in out STMPE811_Device;
-                            Pin       : Byte;
-                            Enabled   : Boolean) is
-      Reg : Byte := This.Read_Register (IOE_REG_GPIO_AF);
+   procedure IOE_AF_Config
+     (This : in out STMPE811_Device; Pin : UInt8; Enabled : Boolean)
+   is
+      Reg : UInt8 := This.Read_Register (IOE_REG_GPIO_AF);
    begin
       if Enabled then
          Reg := Reg or Pin;
@@ -244,16 +234,16 @@ package body STMPE811 is
 
    function Get_IOE_ID (This : in out STMPE811_Device) return UInt16 is
    begin
-      return (UInt16 (This.Read_Register (0)) * (2**8))
-        or UInt16 (This.Read_Register (1));
+      return
+        (UInt16 (This.Read_Register (0)) * (2**8)) or
+        UInt16 (This.Read_Register (1));
    end Get_IOE_ID;
 
    ----------------
    -- Initialize --
    ----------------
 
-   function Initialize (This : in out STMPE811_Device) return Boolean
-   is
+   function Initialize (This : in out STMPE811_Device) return Boolean is
    begin
 
       This.Time.Delay_Milliseconds (100);
@@ -298,27 +288,24 @@ package body STMPE811 is
    -- Set_Bounds --
    ----------------
 
-   overriding
-   procedure Set_Bounds (This   : in out STMPE811_Device;
-                         Width  : Natural;
-                         Height : Natural;
-                         Swap   : HAL.Touch_Panel.Swap_State)
+   overriding procedure Set_Bounds
+     (This : in out STMPE811_Device; Width : Natural; Height : Natural;
+      Swap :        HAL.Touch_Panel.Swap_State)
    is
    begin
-      This.LCD_Natural_Width := Width;
+      This.LCD_Natural_Width  := Width;
       This.LCD_Natural_Height := Height;
-      This.Swap := Swap;
+      This.Swap               := Swap;
    end Set_Bounds;
 
    -------------------------
    -- Active_Touch_Points --
    -------------------------
 
-   overriding
-   function Active_Touch_Points (This : in out STMPE811_Device)
-                                 return Touch_Identifier
+   overriding function Active_Touch_Points
+     (This : in out STMPE811_Device) return Touch_Identifier
    is
-      Val : constant Byte := This.Read_Register (IOE_REG_TSC_CTRL) and 16#80#;
+      Val : constant UInt8 := This.Read_Register (IOE_REG_TSC_CTRL) and 16#80#;
    begin
       if Val = 0 then
          This.Write_Register (IOE_REG_FIFO_STA, 16#01#);
@@ -334,18 +321,17 @@ package body STMPE811 is
    -- Get_Touch_Point --
    ---------------------
 
-   overriding
-   function Get_Touch_Point (This     : in out STMPE811_Device;
-                             Touch_Id : Touch_Identifier)
-                             return TP_Touch_State
+   overriding function Get_Touch_Point
+     (This : in out STMPE811_Device; Touch_Id : Touch_Identifier)
+      return TP_Touch_State
    is
-      State     : TP_Touch_State;
-      Raw_X     : UInt32;
-      Raw_Y     : UInt32;
-      Raw_Z     : UInt32;
-      X         : Integer;
-      Y         : Integer;
-      Tmp       : Integer;
+      State : TP_Touch_State;
+      Raw_X : UInt32;
+      Raw_Y : UInt32;
+      Raw_Z : UInt32;
+      X     : Integer;
+      Y     : Integer;
+      Tmp   : Integer;
 
    begin
 
@@ -361,10 +347,13 @@ package body STMPE811 is
          Z_Frac : constant TSC_Data := This.Read_Data (IOE_REG_TSC_FRACT_Z, 1);
 
       begin
-         Raw_X := 2 ** 12 -
-           (Shift_Left (UInt32 (Data_X (1)) and 16#0F#, 8) or UInt32 (Data_X (2)));
+         Raw_X :=
+           2**12 -
+           (Shift_Left (UInt32 (Data_X (1)) and 16#0F#, 8) or
+            UInt32 (Data_X (2)));
          Raw_Y :=
-           Shift_Left (UInt32 (Data_Y (1)) and 16#0F#, 8) or UInt32 (Data_Y (2));
+           Shift_Left (UInt32 (Data_Y (1)) and 16#0F#, 8) or
+           UInt32 (Data_Y (2));
          Raw_Z :=
            Shift_Right (UInt32 (Data_Z (1)), Natural (Z_Frac (1) and 2#111#));
       end;
@@ -400,17 +389,17 @@ package body STMPE811 is
       end if;
       if (This.Swap and Swap_XY) /= 0 then
          Tmp := X;
-         X := Y;
-         Y := Tmp;
+         X   := Y;
+         Y   := Tmp;
       end if;
 
       State.X := X;
       State.Y := Y;
 
-      State.Weight   := Integer'Max (Integer (Raw_Z), 8);
+      State.Weight := Integer'Max (Integer (Raw_Z), 8);
       --  constant event kind: the hw does not tell us if it's a new touch or
       --  if the finger is released
-      State.Event    := Press_Down;
+      State.Event := Press_Down;
       --  No multitouch here: touch_id is always 0
       State.Touch_Id := 0;
 
@@ -424,10 +413,8 @@ package body STMPE811 is
    -- Get_All_Touch_Points --
    --------------------------
 
-   overriding
-   function Get_All_Touch_Points
-     (This     : in out STMPE811_Device)
-      return HAL.Touch_Panel.TP_State
+   overriding function Get_All_Touch_Points
+     (This : in out STMPE811_Device) return HAL.Touch_Panel.TP_State
    is
       N_Touch : constant Natural := This.Active_Touch_Points;
       State   : TP_State (1 .. N_Touch);
@@ -438,7 +425,7 @@ package body STMPE811 is
       end if;
 
       for J in State'Range loop
-         State (J) :=  This.Get_Touch_Point (J);
+         State (J) := This.Get_Touch_Point (J);
       end loop;
 
       return State;

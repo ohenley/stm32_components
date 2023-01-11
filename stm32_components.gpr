@@ -16,7 +16,9 @@ project Stm32_Components is
    Components_Src_Dirs := ();
    case Stm32_Config_Config.Board is
       when "stm32f429disco" =>
-         Components_Src_Dirs := Components_Src_Dirs & ("src/motion/l3gd20");
+         Components_Src_Dirs := Components_Src_Dirs & ("src/motion/l3gd20/",
+                                                       "src/touch_panel/stmpe811/",
+                                                       "src/screen/ili9341/");
       when others => null;
    end case;
 

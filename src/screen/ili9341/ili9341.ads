@@ -45,9 +45,9 @@
 --  See the "a-Si TFT LCD Single Chip Driver" specification by ILITEK, file
 --  name "ILI9341_DS_V1.02" for details.
 
-with HAL;      use HAL;
-with HAL.SPI;  use HAL.SPI;
-with HAL.GPIO; use HAL.GPIO;
+with Beta_Types;      use Beta_Types;
+with HAL.SPI;         use HAL.SPI;
+with HAL.GPIO;        use HAL.GPIO;
 with HAL.Time;
 
 package ILI9341 is
@@ -70,9 +70,9 @@ package ILI9341 is
    --  Initializes the device. Afterward, the device is also enabled so there
    --  is no immediate need to call Enable_Display.
 
-   procedure Send_Command (This : in out ILI9341_Device; Cmd : Byte);
+   procedure Send_Command (This : in out ILI9341_Device; Cmd : UInt8);
 
-   procedure Send_Data (This : in out ILI9341_Device; Data : Byte);
+   procedure Send_Data (This : in out ILI9341_Device; Data : UInt8);
 
    Device_Width  : constant := 240;
    Device_Height : constant := 320;
