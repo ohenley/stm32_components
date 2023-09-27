@@ -44,7 +44,7 @@ package body STM32.Eth is
    type Rx_Desc_Array is array (Rx_Desc_Range) of Rx_Desc_Type;
    type Rx_Desc_Arr_Ptr is access Rx_Desc_Array;
 
-   type Rx_Buffer is array (Natural range 0 .. 1023) of Unsigned_8;
+   type Rx_Buffer is array (Natural range 0 .. 1023) of UInt8;
    type Rx_Buffer_Array is array (Rx_Desc_Range) of Rx_Buffer;
    type Rx_Buffer_Arr_Ptr is access Rx_Buffer_Array;
 
@@ -75,26 +75,76 @@ package body STM32.Eth is
       --  Select RMII (before enabling the clocks)
       STM32_SVD.SYSCFG.SYSCFG_Periph.PMC.MII_RMII_SEL := True;
 
-      Configure_Alternate_Function (PA1,  GPIO_AF_11_ETH); -- RMII_REF_CLK
-      Configure_Alternate_Function (PA2,  GPIO_AF_11_ETH); -- RMII_MDIO
-      Configure_Alternate_Function (PA7,  GPIO_AF_11_ETH); -- RMII_CRS_DV
-      Configure_Alternate_Function (PC1,  GPIO_AF_11_ETH); -- RMII_MDC
-      Configure_Alternate_Function (PC4,  GPIO_AF_11_ETH); -- RMII_RXD0
-      Configure_Alternate_Function (PC5,  GPIO_AF_11_ETH); -- RMII_RXD1
-      Configure_Alternate_Function (PG2,  GPIO_AF_11_ETH); -- RMII_RXER
-      Configure_Alternate_Function (PG11, GPIO_AF_11_ETH); -- RMII_TX_EN
-      Configure_Alternate_Function (PG13, GPIO_AF_11_ETH); -- RMII_TXD0
-      Configure_Alternate_Function (PG14, GPIO_AF_11_ETH); -- RMII_TXD1
-      Configure_IO (PA1, (Mode_AF, Push_Pull, Speed_100MHz, Floating));
-      Configure_IO (PA2, (Mode_AF, Push_Pull, Speed_100MHz, Floating));
-      Configure_IO (PA7, (Mode_AF, Push_Pull, Speed_100MHz, Floating));
-      Configure_IO (PC1, (Mode_AF, Push_Pull, Speed_100MHz, Floating));
-      Configure_IO (PC4, (Mode_AF, Push_Pull, Speed_100MHz, Floating));
-      Configure_IO (PC5, (Mode_AF, Push_Pull, Speed_100MHz, Floating));
-      Configure_IO (PG2, (Mode_AF, Push_Pull, Speed_100MHz, Floating));
-      Configure_IO (PG11, (Mode_AF, Push_Pull, Speed_100MHz, Floating));
-      Configure_IO (PG13, (Mode_AF, Push_Pull, Speed_100MHz, Floating));
-      Configure_IO (PG14, (Mode_AF, Push_Pull, Speed_100MHz, Floating));
+      Configure_Alternate_Function (PA1,  GPIO_AF_ETH_11); -- RMII_REF_CLK
+      Configure_Alternate_Function (PA2,  GPIO_AF_ETH_11); -- RMII_MDIO
+      Configure_Alternate_Function (PA7,  GPIO_AF_ETH_11); -- RMII_CRS_DV
+      Configure_Alternate_Function (PC1,  GPIO_AF_ETH_11); -- RMII_MDC
+      Configure_Alternate_Function (PC4,  GPIO_AF_ETH_11); -- RMII_RXD0
+      Configure_Alternate_Function (PC5,  GPIO_AF_ETH_11); -- RMII_RXD1
+      Configure_Alternate_Function (PG2,  GPIO_AF_ETH_11); -- RMII_RXER
+      Configure_Alternate_Function (PG11, GPIO_AF_ETH_11); -- RMII_TX_EN
+      Configure_Alternate_Function (PG13, GPIO_AF_ETH_11); -- RMII_TXD0
+      Configure_Alternate_Function (PG14, GPIO_AF_ETH_11); -- RMII_TXD1
+
+      Configure_IO (PA1, (Mode           => Mode_AF,
+                          AF             => GPIO_AF_ETH_11,
+                          AF_Output_Type => Push_Pull,
+                          AF_Speed       => Speed_100MHz,
+                          Resistors      => Floating));
+
+      Configure_IO (PA2, (Mode           => Mode_AF,
+                          AF             => GPIO_AF_ETH_11,
+                          AF_Output_Type => Push_Pull,
+                          AF_Speed       => Speed_100MHz,
+                          Resistors      => Floating));
+
+      Configure_IO (PA7, (Mode           => Mode_AF,
+                          AF             => GPIO_AF_ETH_11,
+                          AF_Output_Type => Push_Pull,
+                          AF_Speed       => Speed_100MHz,
+                          Resistors      => Floating));
+
+      Configure_IO (PC1, (Mode           => Mode_AF,
+                          AF             => GPIO_AF_ETH_11,
+                          AF_Output_Type => Push_Pull,
+                          AF_Speed       => Speed_100MHz,
+                          Resistors      => Floating));
+
+      Configure_IO (PC4, (Mode           => Mode_AF,
+                          AF             => GPIO_AF_ETH_11,
+                          AF_Output_Type => Push_Pull,
+                          AF_Speed       => Speed_100MHz,
+                          Resistors      => Floating));
+
+      Configure_IO (PC5, (Mode           => Mode_AF,
+                          AF             => GPIO_AF_ETH_11,
+                          AF_Output_Type => Push_Pull,
+                          AF_Speed       => Speed_100MHz,
+                          Resistors      => Floating));
+
+      Configure_IO (PG2, (Mode           => Mode_AF,
+                          AF             => GPIO_AF_ETH_11,
+                          AF_Output_Type => Push_Pull,
+                          AF_Speed       => Speed_100MHz,
+                          Resistors      => Floating));
+
+      Configure_IO (PG11, (Mode           => Mode_AF,
+                          AF             => GPIO_AF_ETH_11,
+                          AF_Output_Type => Push_Pull,
+                          AF_Speed       => Speed_100MHz,
+                          Resistors      => Floating));
+
+      Configure_IO (PG13, (Mode           => Mode_AF,
+                          AF             => GPIO_AF_ETH_11,
+                          AF_Output_Type => Push_Pull,
+                          AF_Speed       => Speed_100MHz,
+                          Resistors      => Floating));
+
+      Configure_IO (PG14, (Mode           => Mode_AF,
+                          AF             => GPIO_AF_ETH_11,
+                          AF_Output_Type => Push_Pull,
+                          AF_Speed       => Speed_100MHz,
+                          Resistors      => Floating));
 
       --  Enable clocks
       RCC_Periph.AHB1ENR.ETHMACEN := True;
@@ -117,7 +167,7 @@ package body STM32.Eth is
    -- Read_MMI --
    --------------
 
-   procedure Read_MMI (Reg : UInt5; Val : out Unsigned_16)
+   procedure Read_MMI (Reg : UInt5; Val : out UInt16)
    is
       use Ada.Real_Time;
       Pa : constant UInt5 := 0;

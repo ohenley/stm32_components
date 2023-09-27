@@ -20,6 +20,11 @@ project Stm32_Components is
                                                        "src/touch_panel/stmpe811/",
                                                        "src/touch_panel/ft6x06/",
                                                        "src/screen/ili9341/");
+      when "stm32f746disco" =>
+         Components_Src_Dirs := Components_Src_Dirs & ("src/eth",
+                                                       "src/audio/W8994/",
+                                                       "src/touch_panel/ft5336/",
+                                                       "src/screen/otm8009a/");
       when others => null;
    end case;
 

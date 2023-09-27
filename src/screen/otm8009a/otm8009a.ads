@@ -30,7 +30,7 @@
 ------------------------------------------------------------------------------
 
 with Interfaces; use Interfaces;
-with HAL;        use HAL;
+with Beta_Types;        use Beta_Types;
 with HAL.DSI;    use HAL.DSI;
 with HAL.Time;
 
@@ -104,7 +104,7 @@ private
       Channel_ID : DSI_Virtual_Channel_ID;
       Time       : not null HAL.Time.Any_Delays)
    is tagged limited record
-      Current_Shift : Byte := 0;
+      Current_Shift : UInt8 := 0;
    end record;
 
    procedure DSI_IO_WriteCmd (This : in out OTM8009A_Device;
@@ -115,7 +115,7 @@ private
                     Data    : HAL.DSI.DSI_Data);
 
    procedure Write (This   : in out OTM8009A_Device;
-                    S_Addr : Byte;
+                    S_Addr : UInt8;
                     Data   : HAL.DSI.DSI_Data);
 
 end OTM8009A;

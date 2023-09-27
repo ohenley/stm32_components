@@ -31,7 +31,7 @@
 
 --  Generic driver for the FT5336 touch panel
 
-with HAL;             use HAL;
+with Beta_Types;      use Beta_Types;
 with HAL.I2C;         use HAL.I2C;
 with HAL.Touch_Panel; use HAL.Touch_Panel;
 with HAL.Time;
@@ -95,20 +95,20 @@ private
 
    function I2C_Read
      (This   : in out FT5336_Device;
-      Reg    : Byte;
+      Reg    : UInt8;
       Status : out Boolean)
-      return Byte;
+      return UInt8;
 
    procedure I2C_Read
      (This   : in out FT5336_Device;
-      Reg    : Byte;
-      Values : out Byte_Array;
+      Reg    : UInt8;
+      Values : out UInt8_Array;
       Status : out Boolean);
 
    procedure I2C_Write
      (This   : in out FT5336_Device;
-      Reg    : Byte;
-      Data   : Byte;
+      Reg    : UInt8;
+      Data   : UInt8;
       Status : out Boolean);
 
 end FT5336;
