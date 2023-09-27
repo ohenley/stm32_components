@@ -775,10 +775,10 @@ package body MPU9250 is
       Low  : Byte) return Integer_16
    is
       ---------------------
-      -- Uint16_To_Int16 --
+      -- UInt16_To_Int16 --
       ---------------------
 
-      function Uint16_To_Int16 is new Ada.Unchecked_Conversion
+      function UInt16_To_Int16 is new Ada.Unchecked_Conversion
         (Unsigned_16, Integer_16);
 
       Register : Unsigned_16;
@@ -786,7 +786,7 @@ package body MPU9250 is
       Register := Shift_Left (Unsigned_16 (High), 8);
       Register := Register or Unsigned_16 (Low);
 
-      return Uint16_To_Int16 (Register);
+      return UInt16_To_Int16 (Register);
    end Fuse_Low_And_High_Register_Parts;
 
 end MPU9250;
